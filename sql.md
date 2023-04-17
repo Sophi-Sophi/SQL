@@ -68,6 +68,91 @@ ON Product.model=Printer.model <br/>
 WHERE maker='B' <br/>
 ***
 
+**Задание: 8**
+Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+---
+SELECT maker  
+FROM Product  
+WHERE type='PC'  
+EXCEPT  
+SELECT maker  
+FROM Product  
+WHERE type ='Laptop'  
+***
+
+**Задание: 9**
+Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+---
+SELECT DISTINCT product.maker  
+FROM  product JOIN pc  
+ON product.model=pc.model  
+WHERE pc.speed>=450
+***
+
+**Задание: 10**
+Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+---
+SELECT DISTINCT model, price  
+FROM printer  
+WHERE price >= (SELECT MAX(price)  
+FROM printer)  
+***
+
+**Задание: 11**
+Найдите среднюю скорость ПК.
+---
+SELECT AVG(speed)  
+FROM pc  
+***
+
+**Задание: 12**
+Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
+---
+SELECT AVG(speed)  
+FROM Laptop  
+WHERE price>1000
+***
+
+**Задание: 13**
+Найдите среднюю скорость ПК, выпущенных производителем A.
+---
+SELECT AVG(speed)  
+FROM pc  
+WHERE model IN(SELECT model  
+FROM Product  
+WHERE maker = 'A')  
+***
+
+**Задание: 14**
+Найдите класс, имя и страну для кораблей из таблицы Ships, имеющих не менее 10 орудий.
+---
+SELECT ships.class, ships.name, classes.country  
+FROM  classes JOIN ships  
+ON classes.class=ships.class  
+WHERE classes.numGuns>=10
+***
+
+**Задание: 15**
+Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
+---
+SELECT hd  
+FROM pc  
+GROUP BY hd  
+HAVING COUNT(hd)>=2  
+***
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
