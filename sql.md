@@ -141,6 +141,50 @@ GROUP BY hd
 HAVING COUNT(hd)>=2  
 ***
 
+**Задание: 16**
+Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается только один раз, т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM. 
+---
+SELECT DISTINCT pMAX.model, pMIN.model, pMAX.speed, pMAX.ram  
+FROM pc pMAX, pc pMIN  
+WHERE pMAX.speed = pMIN.speed   
+AND pMAX.ram = pMIN.ram  
+AND pMAX.model > pMIN.model  
+***
+
+**Задание: 17**
+Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
+Вывести: type, model, speed
+---
+SELECT DISTINCT p.type, p.model, l.speed  
+FROM Product p  
+JOIN Laptop l  
+ON l.speed < ALL (SELECT speed FROM PC)  
+WHERE l.model = p.model   
+AND p.type='Laptop'  
+***
+
+**Задание: 18**
+Найдите производителей самых дешевых цветных принтеров. Вывести: maker, price
+---
+SELECT DISTINCT  p.maker, r.price 
+FROM Printer r 
+JOIN Product p ON p.type='Printer'
+WHERE r.price = (SELECT MIN(price) 
+FROM Printer WHERE color='y') 
+AND p.model=r.model 
+AND r.color='y'
+***
+
+**Задание: 19**
+Для каждого производителя, имеющего модели в таблице Laptop, найдите средний размер экрана выпускаемых им ПК-блокнотов.
+Вывести: maker, средний размер экрана. 
+---
+SELECT p.maker, AVG(l.screen) 
+FROM Product p
+JOIN Laptop l ON p.model=l.model
+WHERE p.type='Laptop'
+GROUP BY p.maker
+***
 
 
 
